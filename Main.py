@@ -8,9 +8,6 @@ def start_message(message):
     bot.send_message(message.chat.id, 'Привет, ты мне написал /start')
 
 
-
-
-
 bot.polling()
 
 
