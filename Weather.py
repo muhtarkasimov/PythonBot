@@ -16,6 +16,7 @@ class Weather:
         self.forecast = ''
         self.location_key = ''
         self.forecast = ''
+        self.weather_array = []
 
     def getLocation(self):
         search_address = 'http://dataservice.accuweather.com/locations/v1/cities/' + self.country_code + '/search?apikey=HCgKwXyCl8E6ZqKV3iXfGAqPt1IKxPr6&q=' + self.city
@@ -32,19 +33,21 @@ class Weather:
         # print(data)
         self.forecast = data
 
-    def get_weather_in_text(self):
+    def get_weather(self):
         self.getLocation()
         self.getForcast()
 
         min_temp = self.forecast['DailyForecasts'][0]['Temperature']['Minimum']['Value']
         max_temp = self.forecast['DailyForecasts'][0]['Temperature']['Maximum']['Value']
+        # convert to celsius
+        min_temp = int(min_temp - 32) * (5.0 / 9.0)
+        max_temp = int(max_temp - 32) * (5.0 / 9.0)
         day_precipitation = self.forecast['DailyForecasts'][0]['Day']['HasPrecipitation']
         day_sky = self.forecast['DailyForecasts'][0]['Day']['IconPhrase']
         night_precipitation = self.forecast['DailyForecasts'][0]['Night']['HasPrecipitation']
         night_sky = self.forecast['DailyForecasts'][0]['Night']['IconPhrase']
 
-        weather_array = [min_temp, max_temp, day_precipitation, day_sky, night_precipitation, night_sky]
-        return weather_array
+        self.weather_array = [min_temp, max_temp, day_precipitation, day_sky, night_precipitation, night_sky]
 
         # print('min temp: ' + str(min_temp))
         # print('max temp: ' + str(max_temp))
@@ -53,6 +56,25 @@ class Weather:
         # print('night precipitation: ' + str(night_precipitation))
         # print('day sky: ' + str(night_sky))
 
-main_wewather = Weather()
-print(main_wewather.get_weather_in_text())
+    def get_weather_in_text(self):
+        self.get_weather()
 
+        if (self.weather_array[2]):
+            day_prec = 'ожидаются'
+        else:
+            day_prec = 'не ожидаются'
+        if (self.weather_array[4]):
+            night_prec = 'ожидаются'
+        else:
+            night_prec = 'не ожидаются'
+
+        text =  'Максимальная температура ' + str(float("{0:.1f}".format(self.weather_array[0]))) + '°C' + \
+                '\nМинимальная температура ' + str(float("{0:.1f}".format(self.weather_array[1]))) + '°C' + \
+                '\nДнем:\n Осадки ' + day_prec + \
+                '\n Небо ' + str(self.weather_array[3]) + \
+                '\nНочью:\n Осадки ' + night_prec + \
+                '\n Небо ' + str(self.weather_array[5])
+        return text
+
+main_weather = Weather()
+print(main_weather.get_weather_in_text())
