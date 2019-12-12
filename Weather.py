@@ -12,10 +12,8 @@ class Weather:
         self.API = 'HCgKwXyCl8E6ZqKV3iXfGAqPt1IKxPr6'
         self.country_code = 'KG'
         self.city = 'Bishkek'
-        self.key = ''
         self.forecast = ''
         self.location_key = ''
-        self.forecast = ''
         self.weather_array = []
 
     def getLocation(self):
@@ -47,7 +45,7 @@ class Weather:
         night_precipitation = self.forecast['DailyForecasts'][0]['Night']['HasPrecipitation']
         night_sky = self.forecast['DailyForecasts'][0]['Night']['IconPhrase']
 
-        self.weather_array = [min_temp, max_temp, day_precipitation, day_sky, night_precipitation, night_sky]
+        self.weather_array = [max_temp, min_temp, day_precipitation, day_sky, night_precipitation, night_sky]
 
         # print('min temp: ' + str(min_temp))
         # print('max temp: ' + str(max_temp))
