@@ -59,8 +59,6 @@ class Time:
         # self.current_second = self.current_time_string[17:19]
         # print(self.current_time_string)
         # print(self.current_second)
-        if (self.get_time()[4] == '35'):
-            print('true')
 
     # def update_time_per_hour(self):
     #     current_time = datetime.now()
@@ -68,5 +66,5 @@ class Time:
     #     # format dd.mm.yyyy hh:mm:ss
     #     current_time_string = time_string = datetime.strftime(datetime.now(), "%d.%m.%Y %H:%M:%S")
 
-time = Time()
-time.update_time()
+# time = Time()
+# time.update_time()
