@@ -1,54 +1,18 @@
 import telebot
 import pyowm
 from Weather import Weather
+from MyTime import Time
+import time
 
 # ---------------------
 weather = Weather()
+my_time = Time()
 
-# создавать один раз каждый жень запрос на ежедневную погоду и хранить в тексте.
-# чтобы каждый раз не просить c API
-# и в дальнейших вызовах в течение дня использовать его
+
+# () создавать один раз каждый жень запрос на ежедневную погоду и хранить в тексте.
+#    чтобы каждый раз не просить c API
+#    и в дальнейших вызовах в течение дня использовать его
 # ---------------------
-
-# # ---------------------------------------------------
-# # Open Weather Map API code
-# owm = pyowm.OWM('200075eea62023528eb46334e61a76c1')
-# observation = owm.weather_at_place('Bishkek')
-# # observation = owm.weather_at_zip_code('720019', 'KG')
-# # print(observation)
-#
-# # weather
-# weather = observation.get_weather()
-# # print(weather)
-#
-# # time
-# time_current = weather.get_reference_time()
-# # print(time_current)
-#
-# # clouds
-# status = weather.get_status()
-# det_status = weather.get_detailed_status()
-# # print(status)
-# # print(det_status)
-#
-# # temperature
-# temp = weather.get_temperature('celsius')
-# temp_current = weather.get_temperature('celsius')['temp']
-# temp_max = weather.get_temperature('celsius')['temp_max']
-# temp_min = weather.get_temperature('celsius')['temp_min']
-# print(temp)
-# print(temp_current, temp_max, temp_min)
-#
-# wind = weather.get_wind()
-# # print(wind)
-#
-# weather_in_text = 'Погода на сегодня:\nТемпература днём   : ' \
-#                   + str(temp_max) + '*c\nТемпература ночью : ' + str(temp_min) \
-#                   + '*c\nТемпература сейчас: ' \
-#                   + str(temp_current) + '*c'
-#
-# # ----------------------------------------------------
-
 
 # ----------------------------------------------------
 # chat code
@@ -58,15 +22,35 @@ bot = telebot.TeleBot('1019588003:AAG0AVRVX7s0AapaeJyhNR66e_CIVrYmR60')
 def start_message(message):
     bot.send_message(message.chat.id, 'Привет, ты мне написал /start')
 
+# def start_weather_bot():
+
+
+# start_weather_bot()
+
+# small reply dicts
+heyWords = ['эй','ау','аууу','ты тут?']
+weatherWords = ['погода', 'какая сегодня погода?', 'какая погода','какая погода?','что с погодой?','что с погодой']
+whatYouCan = ['что ты можешь?']
+helloWords = ['привет','салам','здаров','здрарова','еу','ёу']
+byeWords = ['пока','прощай','досвидание','досвидания','bye']
+
 @bot.message_handler(content_types=['text'])
 def send_text(message):
-    if message.text.lower() == 'привет':
-        bot.send_message(message.chat.id, 'Привет, мой создатель')
-    elif message.text.lower() == 'пока':
-        bot.send_message(message.chat.id, 'Прощай, создатель')
-    elif message.text.lower() == 'погода':
+    if message.text.lower() in helloWords:
+        bot.send_message(message.chat.id, 'Привет!')
+    elif message.text.lower() in byeWords:
+        bot.send_message(message.chat.id, 'Пока :(')
+    elif message.text.lower() in heyWords:
+        bot.send_message(message.chat.id, 'Да, я тут! Слушаю...')
+    elif message.text.lower() in weatherWords:
         bot.send_message(message.chat.id, weather.get_weather_in_text())
-    elif message.text.lower() == 'погоду всем':
-        bot.send_message(message.chat.id, weather.get_weather_in_text())
+        print(message)
+    elif message.text.lower() in whatYouCan:
+        bot.send_message(message.chat.id, 'Могу сказать какая сегодня погода\nМогу выслушать и не понять все равно ¯\_(ツ)_/¯')
+    else:
+        bot.send_message(message.chat.id, 'Мой создатель еще на придумал как мне на это отвечать ¯\_(ツ)_/¯')
+        # Вот тут написать метод для рассылки
+    # elif message.text.lower() == 'погоду всем':
+    #     bot.send_message(message.chat.id, weather.get_weather_in_text())
 bot.polling()
 # ----------------------------------------------------

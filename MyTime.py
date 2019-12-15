@@ -1,6 +1,6 @@
 import time
 from _datetime import datetime
-
+import time
 
 class Time:
 
@@ -16,6 +16,8 @@ class Time:
         self.current_hour = self.current_time_string[11:13]
         self.current_minute = self.current_time_string[14:16]
         self.current_second = self.current_time_string[17:]
+
+
 
     # --------------------------------------------------
     # Time
@@ -66,5 +68,10 @@ class Time:
     #     # format dd.mm.yyyy hh:mm:ss
     #     current_time_string = time_string = datetime.strftime(datetime.now(), "%d.%m.%Y %H:%M:%S")
 
-# time = Time()
-# time.update_time()
+# my_time = Time()
+# my_time.update_time()
+#
+# while(True):
+#     my_time.update_time
+#     my_time.print_time()
+#     time.sleep(30)
