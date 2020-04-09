@@ -1,4 +1,5 @@
 import telebot
+# pip install pyTelegramBotAPI==0.3.0
 import pyowm
 from Weather import Weather
 from MyTime import Time
